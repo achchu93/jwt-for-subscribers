@@ -26,8 +26,18 @@ function jws_options_page() {
 add_action( 'admin_menu', 'jws_options_page' );
 
 /**
+ * Register JWS settings
+ */
+function register_jws_settings() {
+    register_setting( 'jws-option-group', 'jws_active', array( 'type' => 'boolean', 'default' => false ) );
+    register_setting( 'jws-option-group', 'jws_subscription_status', array( 'type' => 'string', 'default' => 'active' ) );
+    register_setting( 'jws-option-group', 'jws_unauthorized_message', array( 'type' => 'string', 'default' => 'You are not subscriber' ) );
+}
+add_action( 'admin_init', 'register_jws_settings' );
+
+/**
  * JWT settings renderer
  */
 function jws_options_page_callback() {
-    echo '<div class="wrap"><h2>JWT for Subscriber Settings</h2></div>';
+    include_once dirname( __FILE__ ) . '/templates/jws-settings-page.php';
 }
