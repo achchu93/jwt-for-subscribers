@@ -5,7 +5,7 @@
  */
 ?>
 <div class="wrap">
-    <h2>JWS Subscriber Settings</h2>
+    <h2>JWT Subscriber Settings</h2>
     <form method="post" action="options.php" novalidate="novalidate">
         <?php settings_fields( 'jws-option-group' ); ?>
         <?php do_settings_sections( 'jws-option-group' ); ?>
@@ -40,13 +40,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">Subscription Status</th>
+                    <th scope="row">Not subscribed message</th>
                     <td>
                         <input 
                             type="text" 
                             name="jws_unauthorized_message" 
                             id="jws_unauthorized_message" 
-                            value="<?php echo esc_attr( get_option( 'jws_unauthorized_message', 'You are not subscriber' ) ); ?>"
+                            value="<?php echo esc_attr( get_option( 'jws_unauthorized_message', 'You are not a subscriber' ) ); ?>"
                         />
                     </td>
                 </tr>
