@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name: JWT based on subscription
- * Plugin URI: #
+ * Plugin URI: https://github.com/achchu93/jwt-for-subscribers
  * Description: An extension to provide JWT based on subscribed users
  * Version: 1.0
- * Author: YAhamed Arshad
+ * Author: Ahamed Arshad
  * Author URI: https://github.com/achchu93
  */
 
