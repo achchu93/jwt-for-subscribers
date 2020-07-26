@@ -50,6 +50,32 @@
                         />
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row">Subscribtion Products</th>
+                    <td>
+                        <select 
+                            multiple="multiple"
+                            name="jws_subscription_products[]"
+                            id="jws_subscription_products" 
+                            style="min-width:250px;"
+                            class="wc-product-search"
+                            data-allow_clear="true" 
+                            data-display_stock="true" 
+                            data-exclude_type="variable" 
+                            data-placeholder="Search for a product"
+                            date-minimum_input_length="3"
+                        >
+                        <?php
+                        $products = get_option( 'jws_subscription_products', array() );
+                        if( is_array( $products ) ) {
+                            foreach( $products as $product ): ?>
+                            <option selected value="<?php echo $product ?>"><?php echo get_post_field( 'post_title', $product ); ?></option>
+                            <?php endforeach;
+                        }
+                        ?>
+                        </select>
+                    </td>
+                </tr>
             </tbody>
         </table>
         

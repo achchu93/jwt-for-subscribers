@@ -44,6 +44,7 @@ function register_jws_settings() {
     register_setting( 'jws-option-group', 'jws_active', array( 'type' => 'boolean', 'default' => false ) );
     register_setting( 'jws-option-group', 'jws_subscription_status', array( 'type' => 'string', 'default' => 'active' ) );
     register_setting( 'jws-option-group', 'jws_unauthorized_message', array( 'type' => 'string', 'default' => 'You are not a subscriber' ) );
+    register_setting( 'jws-option-group', 'jws_subscription_products' );
 }
 add_action( 'admin_init', 'register_jws_settings' );
 
@@ -60,7 +61,26 @@ function jws_options_page_callback() {
 function jws_validate_user_subscription( $data, $user ) {
     $is_active = get_option( 'jws_active', false );
     $status    = get_option( 'jws_subscription_status', 'active' );
-    if( $is_active && !wcs_user_has_subscription( $user->ID, '', $status ) ) {
+    $products  = get_option( 'jws_subscription_products', array() );
+
+    if( !$is_active ) {
+        return $data;
+    }
+
+    $has_subscription = false;
+
+    if( is_array( $products ) && count( $products ) ) {
+        foreach( $products as $product_id ) {
+            $has_subscription = wcs_user_has_subscription( $user->ID, $product_id, $status );
+
+            // bail out if subsciption is active for any product
+            if( $has_subscription ) break;
+        }
+    }else{
+        $has_subscription = wcs_user_has_subscription( $user->ID, '', $status );
+    }
+
+    if( !$has_subscription ) {
         return new WP_Error(
             '[jwt_auth] user_not_subscribed',
             get_option( 'jws_unauthorized_message', 'You are not a subscriber' ),
@@ -74,3 +94,13 @@ function jws_validate_user_subscription( $data, $user ) {
 
 }
 add_filter( 'jwt_auth_token_before_dispatch', 'jws_validate_user_subscription', 10, 2 );
+
+
+/**
+ * Admin settings scripts
+ */
+function jws_admin_assets() {
+    wp_enqueue_style( 'woocommerce_admin_styles' );
+    wp_enqueue_script( 'wc-enhanced-select' );
+}
+add_action( 'admin_enqueue_scripts', 'jws_admin_assets', 99 );
