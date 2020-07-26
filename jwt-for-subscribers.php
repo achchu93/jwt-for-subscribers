@@ -4,8 +4,8 @@
  * Plugin URI: https://github.com/achchu93/jwt-for-subscribers
  * Description: An extension to provide JWT based on subscribed users
  * Version: 1.0
- * Author: Ahamed Arshad
- * Author URI: https://github.com/achchu93
+ * Author: 8 Gates Technologies
+ * Author URI: https://8gatestech.com
  */
 
 
